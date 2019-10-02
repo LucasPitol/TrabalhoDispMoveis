@@ -9,6 +9,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView startBtn;
     private ImageView stopBtn;
+    private ImageView cleanBtn;
+    private ImageView gambiSpace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
     public void setUI() {
         startBtn = findViewById(R.id.start_btn);
         stopBtn = findViewById(R.id.stop_btn);
+        cleanBtn = findViewById(R.id.clean_icon);
+        gambiSpace = findViewById(R.id.gambi);
 
         stopBtn.setVisibility(View.GONE);
+        cleanBtn.setVisibility(View.GONE);
     }
+
 }
