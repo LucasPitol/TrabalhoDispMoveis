@@ -3,12 +3,16 @@ package com.example.mexemexe;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
@@ -16,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ImageView stopBtn;
     private ImageView cleanBtn;
     private ImageView gambiSpace;
-    private TextView texto;
+    private ListView listView;
 
     private TextView xPosition;
     private TextView yPosition;
@@ -26,8 +30,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager gerenciadorMovimento;
 
     private String posicaoAtual = "";
+    private String posicaoAnterior = "";
 
     private boolean funfando = false;
+
+    private ArrayList<String> listaMovimentos;
+    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +78,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         stopBtn = findViewById(R.id.stop_btn);
         cleanBtn = findViewById(R.id.clean_icon);
         gambiSpace = findViewById(R.id.gambi);
-        texto = findViewById(R.id.texto);
 
         xPosition = findViewById(R.id.xPosition);
         yPosition = findViewById(R.id.yPosition);
         zPosition = findViewById(R.id.zPosition);
+
+        listView = findViewById(R.id.list_view);
+
+        listaMovimentos = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                listaMovimentos);
+
+        listView.setAdapter(adapter);
 
         stopBtn.setVisibility(View.GONE);
         cleanBtn.setVisibility(View.GONE);
@@ -96,23 +112,35 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             boolean posicaoVolante = ((y > 6.00f) && (y < 10.00f));
 
-            if (posicaoEnchada) {
+            if (posicaoEnchada && !posicaoVolante) {
 
                 if ((y > 0.00f) && (y < 3.00f)) {
-                    this.posicaoAtual = "Deitou";
+                    posicaoAtual = "Deitou";
+
                 } else if ((y > -10.0f) && (y < 0.00f)) {
-                    this.posicaoAtual = "Cabeça p baixo";
+                    posicaoAtual = "Cabeça p baixo";
+
                 }
 
-            } else if (posicaoVolante) {
+            }
+
+            if (posicaoVolante && !posicaoEnchada) {
                 if ((x > 3.00f) && (x < 10.0f)) {
-                    this.posicaoAtual = "Esquerdou";
+                    posicaoAtual = "Esquerdou";
                 } else if ((x > -10.0f) && (x < -3.00f)) {
-                    this.posicaoAtual = "Direitou";
+                    posicaoAtual = "Direitou";
                 }
             }
 
-            texto.setText(this.posicaoAtual);
+            if (posicaoEnchada && posicaoVolante) {
+                posicaoAtual = "Em pé";
+            }
+
+            if (!posicaoAtual.equals(posicaoAnterior)) {
+                listaMovimentos.add(posicaoAtual);
+                this.posicaoAnterior = posicaoAtual;
+                adapter.notifyDataSetChanged();
+            }
         }
 
     }

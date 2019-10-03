@@ -47,12 +47,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
-    <TextView
-        android:id="@+id/texto"
-        android:textAlignment="center"
-        android:textSize="40dp"
+    <ListView
+        android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="400dp">
+
+    </ListView>
 
     <ImageView
         android:id="@+id/start_btn"
