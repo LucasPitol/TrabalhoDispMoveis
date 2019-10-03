@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor sensor;
     private SensorManager gerenciadorMovimento;
 
+    private String posicaoAtual = "";
+
+    private boolean funfando = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View v) {
                 startBtn.setVisibility(View.GONE);
                 stopBtn.setVisibility(View.VISIBLE);
+                funfando = true;
             }
         });
 
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View v) {
                 stopBtn.setVisibility(View.GONE);
                 startBtn.setVisibility(View.VISIBLE);
+                funfando = false;
             }
         });
     }
@@ -76,9 +82,39 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        xPosition.setText("X: " + event.values[0]);
-        yPosition.setText("Y: " + event.values[1]);
-        zPosition.setText("Z: " + event.values[2]);
+        if (funfando) {
+
+            float x =  event.values[0];
+            float y =  event.values[1];
+            float z =  event.values[2];
+
+            xPosition.setText("X: " + x);
+            yPosition.setText("Y: " + y);
+            zPosition.setText("Z: " + z);
+
+            boolean posicaoEnchada = ((x > -3.00f) && (x < 3.00f));
+
+            boolean posicaoVolante = ((y > 6.00f) && (y < 10.00f));
+
+            if (posicaoEnchada) {
+
+                if ((y > 0.00f) && (y < 3.00f)) {
+                    this.posicaoAtual = "Deitou";
+                } else if ((y > -10.0f) && (y < 0.00f)) {
+                    this.posicaoAtual = "Cabeça p baixo";
+                }
+
+            } else if (posicaoVolante) {
+                if ((x > 3.00f) && (x < 10.0f)) {
+                    this.posicaoAtual = "Esquerdou";
+                } else if ((x > -10.0f) && (x < -3.00f)) {
+                    this.posicaoAtual = "Direitou";
+                }
+            }
+
+            texto.setText(this.posicaoAtual);
+        }
+
     }
 
     @Override
