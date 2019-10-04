@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ArrayList<Mapa> listaMovimentos;
     ArrayAdapter adapter;
 
+    private GerenteBanco gerenteBanco;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         listView.setAdapter(adapter);
 
+        gerenteBanco = new GerenteBanco(this);
+
         stopBtn.setVisibility(View.GONE);
         cleanBtn.setVisibility(View.GONE);
     }
@@ -139,10 +143,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             if (!posicaoAtual.equals(posicaoAnterior)) {
 
-                Mapa mapa = new Mapa(posicaoAtual, new Date());
+                Mapa mapa = new Mapa(posicaoAtual);
 
-                listaMovimentos.add(mapa);
+                //listaMovimentos.add(mapa);
+                gerenteBanco.insereMapa(mapa);
                 this.posicaoAnterior = posicaoAtual;
+                gerenteBanco.listarMapas(listaMovimentos);
                 adapter.notifyDataSetChanged();
             }
         }

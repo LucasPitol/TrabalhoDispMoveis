@@ -11,14 +11,14 @@ public class Mapa {
     public Date momento;
     public String momentoStr;
 
-    public Mapa(String movimento, Date m) {
+    public Mapa(String movimento) {
         this.movimento = movimento;
-        this.momento = m;
-        momentoStr = (formatter.format(m));
+        //this.momento = m;
+        //momentoStr = (formatter.format(m));
     }
 
     @Override
     public String toString() {
-        return this.movimento + "    " + this.momentoStr;
+        return this.movimento;
     }
 }
