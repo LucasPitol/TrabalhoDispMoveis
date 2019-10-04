@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
@@ -23,9 +22,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ImageView gambiSpace;
     private ListView listView;
 
-    private TextView xPosition;
-    private TextView yPosition;
-    private TextView zPosition;
+//    private TextView xPosition;
+//    private TextView yPosition;
+//    private TextView zPosition;
 
     private Sensor sensor;
     private SensorManager gerenciadorMovimento;
@@ -66,6 +65,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 funfando = false;
             }
         });
+
+        cleanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listaMovimentos.clear();
+                gerenteBanco.limparDados();
+                adapter.notifyDataSetChanged();
+                trocaBotaoLimpar();
+            }
+        });
     }
 
     public void startSensor() {
@@ -82,9 +91,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         cleanBtn = findViewById(R.id.clean_icon);
         gambiSpace = findViewById(R.id.gambi);
 
-        xPosition = findViewById(R.id.xPosition);
-        yPosition = findViewById(R.id.yPosition);
-        zPosition = findViewById(R.id.zPosition);
+//        xPosition = findViewById(R.id.xPosition);
+//        yPosition = findViewById(R.id.yPosition);
+//        zPosition = findViewById(R.id.zPosition);
 
         listView = findViewById(R.id.list_view);
 
@@ -98,7 +107,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         gerenteBanco = new GerenteBanco(this);
 
         stopBtn.setVisibility(View.GONE);
-        cleanBtn.setVisibility(View.GONE);
+
+        gerenteBanco.listarMapas(listaMovimentos);
+        trocaBotaoLimpar();
     }
 
     @Override
@@ -107,11 +118,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             float x =  event.values[0];
             float y =  event.values[1];
-            float z =  event.values[2];
+            //float z =  event.values[2];
 
-            xPosition.setText("X: " + x);
-            yPosition.setText("Y: " + y);
-            zPosition.setText("Z: " + z);
+//            xPosition.setText("X: " + x);
+//            yPosition.setText("Y: " + y);
+//            zPosition.setText("Z: " + z);
 
             boolean posicaoEnchada = ((x > -3.00f) && (x < 3.00f));
 
@@ -149,10 +160,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 gerenteBanco.insereMapa(mapa);
                 this.posicaoAnterior = posicaoAtual;
                 gerenteBanco.listarMapas(listaMovimentos);
+
+                trocaBotaoLimpar();
+
                 adapter.notifyDataSetChanged();
             }
         }
 
+    }
+
+    public void trocaBotaoLimpar() {
+
+        if (!listaMovimentos.isEmpty()) {
+            this.cleanBtn.setVisibility(View.VISIBLE);
+            this.gambiSpace.setVisibility(View.GONE);
+        } else {
+            this.cleanBtn.setVisibility(View.GONE);
+            this.gambiSpace.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

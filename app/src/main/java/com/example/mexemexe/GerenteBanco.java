@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class GerenteBanco extends SQLiteOpenHelper {
@@ -41,6 +42,15 @@ public class GerenteBanco extends SQLiteOpenHelper {
         //registro.put("DT", mapa.momento.toString());
 
         db.insert(NomeTabela, null, registro);
+    }
+
+    public void limparDados() {
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String sql = "DELETE FROM " + NomeTabela + ";";
+
+        db.execSQL(sql);
     }
 
     public ArrayList<Mapa> listarMapas(ArrayList<Mapa> listaPosicoes) {
@@ -78,6 +88,8 @@ public class GerenteBanco extends SQLiteOpenHelper {
             proximo = cursor.moveToNext();
         }
         db.close();
+
+        Collections.reverse(listaPosicoes);
 
         return listaPosicoes;
     }

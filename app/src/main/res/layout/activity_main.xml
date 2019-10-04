@@ -26,31 +26,31 @@
         android:layout_marginRight="20dp"
         tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/xPosition"
-        android:text="X"
-        android:textSize="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+    <!--<TextView-->
+        <!--android:id="@+id/xPosition"-->
+        <!--android:text="X"-->
+        <!--android:textSize="30dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp" />-->
 
-    <TextView
-        android:id="@+id/yPosition"
-        android:text="Y"
-        android:textSize="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+    <!--<TextView-->
+        <!--android:id="@+id/yPosition"-->
+        <!--android:text="Y"-->
+        <!--android:textSize="30dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp" />-->
 
-    <TextView
-        android:id="@+id/zPosition"
-        android:text="Z"
-        android:textSize="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+    <!--<TextView-->
+        <!--android:id="@+id/zPosition"-->
+        <!--android:text="Z"-->
+        <!--android:textSize="30dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp" />-->
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="500dp">
 
     </ListView>
 
