@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private boolean funfando = false;
 
-    private ArrayList<String> listaMovimentos;
+    private ArrayList<Mapa> listaMovimentos;
     ArrayAdapter adapter;
 
     @Override
@@ -85,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         listView = findViewById(R.id.list_view);
 
-        listaMovimentos = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(this,
+        listaMovimentos = new ArrayList<Mapa>();
+        adapter = new ArrayAdapter<Mapa>(this,
                 android.R.layout.simple_list_item_1,
                 listaMovimentos);
 
@@ -137,7 +138,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
 
             if (!posicaoAtual.equals(posicaoAnterior)) {
-                listaMovimentos.add(posicaoAtual);
+
+                Mapa mapa = new Mapa(posicaoAtual, new Date());
+
+                listaMovimentos.add(mapa);
                 this.posicaoAnterior = posicaoAtual;
                 adapter.notifyDataSetChanged();
             }
